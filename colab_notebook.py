@@ -1,9 +1,7 @@
-!pip install pandas
-!pip install numpy
-!pip install matplotlib
-!pip install scikit-learn
-!pip install scikit-learn
-!pip install tensorflow
+### clocks
+from datetime import datetime
+start = datetime.now()
+print("script start: ", start)
 
 import pandas as pd
 import numpy as np
@@ -15,6 +13,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from tensorflow.keras import metrics
 
+# df = pd.read_csv('/content/drive/MyDrive/rfa/test_df.csv')
 df = pd.read_csv('https://raw.githubusercontent.com/11990560/demos/main/test_df.csv')
 
 print(len(df))
@@ -49,9 +48,17 @@ X_train, X_test, y_train, y_test = train_test_split(X, ypsf, test_size=0.5, rand
 
 # print(X_train, X_test, y_train, y_test)
 
+
+### start neural netting ###
+nn_start = datetime.now()
+print("nn start: ", nn_start)
+
+
 ## Creating the model
 model = Sequential()
 af = 'relu'
+e = 20
+
 model.add(Dense(256,activation=af,name='layer1')) ##<----- You don't have to specify input size.Just define the hidden layers
 model.add(Dense(256,activation=af,name='layer2'))
 model.add(Dense(256,activation=af,name='layer3'))
@@ -80,10 +87,19 @@ model.compile(optimizer='adam'
 h = model.fit(x=X_train
           ,y=y_train
           ,validation_data=(X_test,y_test)
-          ,epochs=30
+          ,epochs=e
           )
 
 y_pred = model(X_val)
+
+
+### nn clock
+nn_end = datetime.now()
+print("nn end: ", nn_end)
+print("nn duration: ", nn_end - nn_start)
+
+
+# results diagnostics
 y_pred = np.concatenate(y_pred, axis=0 )
 error = y_pred - y_val
 print(round(abs(error).mean(),2), round(error.std(),2))
@@ -136,3 +152,10 @@ plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 plt.show()
+
+### clocks
+end = datetime.now()
+print("script start: ", start)
+print("script end: ", end)
+print("total time: ", end - start)
+print("neural net duration: ", nn_end - nn_start)
