@@ -23,6 +23,7 @@ print("input string length: ",len(data))
 
 client = Groq(
     api_key=userdata.get('GROQ_API_KEY'),
+    # api_key= 'GROQ_API_KEY',
 )
 
 chat_completion = client.chat.completions.create(
