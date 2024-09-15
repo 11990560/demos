@@ -11,7 +11,7 @@ df = pd.read_csv('https://raw.githubusercontent.com/11990560/demos/main/test_df.
 # df = pd.read_csv('https://raw.githubusercontent.com/11990560/demos/main/calgary_rents_raw.csv')
 # print(df)
 
-df = df.head(500)
+df = df.iloc[2500:3500]
 
 # data = df.to_string()
 data = round(df['psf'],1).to_string()
